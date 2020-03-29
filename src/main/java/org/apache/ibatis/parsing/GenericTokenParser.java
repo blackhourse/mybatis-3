@@ -44,9 +44,11 @@ public class GenericTokenParser {
     final StringBuilder builder = new StringBuilder();
     StringBuilder expression = null;
     while (start > -1) {
+      // 转义字符
+      // 因为 openToken 前面一个位置是 \ 转义字符，所以忽略 \
       if (start > 0 && src[start - 1] == '\\') {
         // this open token is escaped. remove the backslash and continue.
-        builder.append(src, offset, start - offset - 1).append(openToken);
+        builder.append(src, offset, start - offset - 1).append(openToken); // 添加 [offset, start - offset - 1] 和 openToken 的内容，添加到 builder 中
         offset = start + openToken.length();
       } else {
         // found open token. let's search close token.
