@@ -50,6 +50,7 @@ public class GenericTokenParser {
         // this open token is escaped. remove the backslash and continue.
         builder.append(src, offset, start - offset - 1).append(openToken); // 添加 [offset, start - offset - 1] 和 openToken 的内容，添加到 builder 中
         offset = start + openToken.length();
+        // 非转义字符
       } else {
         // found open token. let's search close token.
         if (expression == null) {

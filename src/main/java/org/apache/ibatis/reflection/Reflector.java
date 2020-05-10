@@ -77,7 +77,9 @@ public class Reflector {
   }
 
   private void addDefaultConstructor(Class<?> clazz) {
+    //获取所有的构造方法
     Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+    // 设置默认无参的构造方法
     Arrays.stream(constructors).filter(constructor -> constructor.getParameterTypes().length == 0)
       .findAny().ifPresent(constructor -> this.defaultConstructor = constructor);
   }
@@ -87,6 +89,7 @@ public class Reflector {
     Method[] methods = getClassMethods(clazz);
     Arrays.stream(methods).filter(m -> m.getParameterTypes().length == 0 && PropertyNamer.isGetter(m.getName()))
       .forEach(m -> addMethodConflict(conflictingGetters, PropertyNamer.methodToProperty(m.getName()), m));
+    // 解决getting冲突方法
     resolveGetterConflicts(conflictingGetters);
   }
 
@@ -322,7 +325,7 @@ public class Reflector {
   }
 
   /**
-   * Checks whether can control member accessible.
+   * Checks whether can control member accessible. 检查 是否可以修改可访问性
    *
    * @return If can control member accessible, it return {@literal true}
    * @since 3.5.0
