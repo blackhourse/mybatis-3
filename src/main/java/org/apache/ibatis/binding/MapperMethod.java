@@ -221,6 +221,14 @@ public class MapperMethod {
     private final String name;
     private final SqlCommandType type;
 
+    /**
+     * 如果找不到 MappedStatement 对象，说明该方法上，没有对应的 SQL 声明。那么在判断是否有 @Flush 注解，
+     * 如果有，说明该方法是用于执行 flush 操作，否则，抛出 BindingException 异常。
+     * 处，如果找到 MappedStatement 对象，则初始化 name 和 type 属性。
+     * @param configuration
+     * @param mapperInterface
+     * @param method
+     */
     public SqlCommand(Configuration configuration, Class<?> mapperInterface, Method method) {
       final String methodName = method.getName();
       final Class<?> declaringClass = method.getDeclaringClass();
@@ -273,9 +281,11 @@ public class MapperMethod {
   }
 
   public static class MethodSignature {
-
+    // 返回类型是否为集合
     private final boolean returnsMany;
+    //返回类型是否为Map
     private final boolean returnsMap;
+    // 返回类型是否为void
     private final boolean returnsVoid;
     private final boolean returnsCursor;
     private final boolean returnsOptional;

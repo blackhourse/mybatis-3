@@ -40,7 +40,7 @@ class UnpooledDataSourceTest {
     assertEquals(before, countRegisteredDrivers());
   }
 
-  @Disabled("Requires MySQL server and a driver.")
+//  @Disabled("Requires MySQL server and a driver.")
   @Test
   void shouldRegisterDynamicallyLoadedDriver() throws Exception {
     int before = countRegisteredDrivers();
